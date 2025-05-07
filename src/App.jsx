@@ -7,20 +7,25 @@ import Navbar from './components/Navbar/Navbar'
 
 // Page component
 import ActivityIndex from './components/ActivityIndex/ActivityIndex'
+import ActivityShow from './components/ActivityShow/ActivityShow'
+// import ActivityCreate from './components/ActivityCreate/ActivityCreate.jsx'
+
 // show to come 
+
 
 
 const App = () => {
 
   return (
-    <main>
+    <>
+      <Navbar />
       <Routes>
         <Route path="/activities" element={<ActivityIndex />} />
-        <Route path="/" element={<ActivityIndex />} />
-
+        <Route path="/activities/:activityId" element={<ActivityShow />} />
+        {/* <Route path="/activities/new" element={<ActivityCreate />} /> */}
       </Routes>
-    </main>
-  );
-};
+    </>
+  )
+}
 
-export default App;
+export default App

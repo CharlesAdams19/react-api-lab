@@ -1,50 +1,37 @@
 // import './ActivityIndex.css'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router' 
-
-
+import { Link } from 'react-router'
+import useFetch from '../../hooks/useFetch'
 
 // Get all activities from activities.js
-import { getAllActivites } from '../../services/activities'
+import { getAllActivities } from '../../services/activities'
 
-export default function ActivityIndex(){
+export default function ActivityIndex() {
 
- // * State : 3 pieces 
-  const [activities, setActivities] = useState([])
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(true)
+    // * State : 3 pieces updated for hook 
+    const { data: activities, isLoading, error } = useFetch(getAllActivities, [])
+    console.log('activities:', activities)
+    console.log('IS LOADING:', isLoading);
+    console.log('ERROR:', error);
 
-    // * On component mount (on the first render of the page)
-    useEffect(() => {
-        async function getActivities(){
-          try {
-            const { data } = await getAllActivites()
-            setActivities(data)
-          } catch {
-            setError('Failed to fetch activity data. Please try again later.')
-          } finally {
-            setLoading(false)
-          }
-        }
-        getActivities()
-      }, [])
-
-
-return (
-    <section>
-      <h1>Activities</h1>
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      <ul>
-        {activities.map((activity) => (
-          <li key={activity._id}>
-            <Link to={`/activities/${activity._id}`}>{activity.name}</Link>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-
+    return (
+        <>
+            <h1>Activities</h1>
+            <section className="activity-list">
+                {error
+                    ? <p className='error-message'>{error}</p>
+                    : isLoading
+                        ? <p>Loading...</p>
+                        : Array.isArray(activities) && activities.length > 0
+                            ? activities.map(activity => (
+                                <Link key={activity._id} to={`/activities/${activity._id}`}>
+                                    <article>
+                                        <h2>{activity.title}</h2>
+                                    </article>
+                                </Link>
+                            ))
+                            : <p>No activities found</p>
+                }
+            </section>
+        </>
+    )
 }
