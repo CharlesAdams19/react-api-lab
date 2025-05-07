@@ -13,6 +13,8 @@ export default function ActivityShow(){
     {}, // Initial data value
     activityId
   )
+  console.log(' ACTIVITY ID:', activityId);
+  console.log(' ACTIVITY DATA:', activity);
 
   return (
     <>

@@ -13,11 +13,6 @@ export const getAllActivities = async () => {
     }
   }
   export const getSingleActivity = async (activityId) => {
-    try {
       const response = await axios.get(`${BASE_URL}/activities/${activityId}`)
-      return response
-    } catch (error) {
-      console.log(error)
-      throw error
+      return response.data
     }
-  }
