@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router' 
 
 
+
 // Get all activities from activities.js
 import { getAllActivites } from '../../services/activities'
 
@@ -27,19 +28,23 @@ export default function ActivityIndex(){
         }
         getActivities()
       }, [])
-}
 
-import { NavLink } from "react-router"
 
-export default function Navbar(){
-  return (
-    <header>
-      <div className="brand-logo">
-        <NavLink to="/">🌍</NavLink>
-      </div>
-      <nav>
-        <a href="/activities">Activities</a>
-      </nav>
-    </header>
-  )
+return (
+    <section>
+      <h1>Activities</h1>
+
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <ul>
+        {activities.map((activity) => (
+          <li key={activity._id}>
+            <Link to={`/activities/${activity._id}`}>{activity.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+
 }

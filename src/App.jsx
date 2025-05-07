@@ -13,7 +13,13 @@ import ActivityIndex from './components/ActivityIndex/ActivityIndex'
 const App = () => {
 
   return (
-    <h1>Hello world!</h1>
+    <main>
+      <Routes>
+        <Route path="/activities" element={<ActivityIndex />} />
+        <Route path="/" element={<ActivityIndex />} />
+
+      </Routes>
+    </main>
   );
 };
 
